@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
+import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { fetchCoins } from "../api";
 
 const Container = styled.div`
   padding: 0px 20px;
@@ -57,7 +58,7 @@ const Img = styled.img`
 
 // 우리는 typescript한테 우리 데이터가 어떻게 생겼는지 알려주어야 한다.
 // API에서 가져오는 데이터도 똑같이 typescript에게 뭐가 오는지 알려줘야 한다.
-interface CoinInterface {
+interface ICoin {
   id: string;
   name: string;
   symbol: string;
@@ -68,30 +69,25 @@ interface CoinInterface {
 }
 
 function Coins() {
-  const [coins, setCoins] = useState<CoinInterface[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    (async () => {
-      const response = await fetch("https://api.coinpaprika.com/v1/coins");
-      const json = await response.json();
-      setCoins(json.slice(0, 100));
-      setLoading(false);
-    })();
-    // (function)() <- 이렇게 만든 함수는 즉시 실행 될거야.
-  }, []);
-  console.log(coins);
+  const { isLoading, data } = useQuery<ICoin[]>("allCoins", fetchCoins);
+  // useQuery hook은 너의 fetcher 함수를 부르고
+  // fetcher 함수가 loading중이라면 react query는 여기서 그걸 알려줄거다.
+  // useQuery는 fetcher 함수를 부르고 fetcher 함수가 끝나면
+  // react query는 이 json을 data에 넣을거다.
+  // 기본적으로 우리가 위에서 했던 것들이다.
+  // fetcher 함수가 끝나면 isLoading을 false로 두었고
+  // fetcher 함수가 끝나면 data를 state에 넣었지.
 
   return (
     <Container>
       <Header>
         <Title>코인</Title>
       </Header>
-      {loading ? (
+      {isLoading ? (
         <Loader>Loading...</Loader>
       ) : (
         <CoinsList>
-          {coins.map((coin) => (
+          {data?.slice(0, 100).map((coin) => (
             <Coin key={coin.id}>
               <Link
                 to={{

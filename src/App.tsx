@@ -3,6 +3,11 @@ import { createGlobalStyle } from "styled-components";
 // 렌더링 될 떄, 그 컴포넌트는 전역 스코프에 스타일을 올려준다.
 import Router from "./Router";
 
+import { ReactQueryDevtools } from "react-query/devtools";
+// react query는 Devtools(Developer Tools, 개발자도구)라는 것을 가지고 있는데
+// Devtools는 render할 수 있는 component이고 이건 뭘 보여주냐면
+// react query에 있는 devtools를 import 해오면 나의 캐시에 있는 query를 볼 수 있다.
+
 const GlobalStyle = createGlobalStyle`
 @import url('https://fonts.googleapis.com/css2?family=Lobster&family=Source+Sans+Pro:wght@300;400&display=swap');
 html, body, div, span, applet, object, iframe,
@@ -71,8 +76,12 @@ function App() {
     <>
       <GlobalStyle />
       <Router />
+      <ReactQueryDevtools initialIsOpen={true} />
     </>
   );
 }
 
 export default App;
+
+// react-query는 우리가 스스로 실행하고 있던 로직들을 축약해준다.
+// react-query를 사용하기 위해서 우리는 첫 단계로 fetcher 함수를 만들어야 한다.
