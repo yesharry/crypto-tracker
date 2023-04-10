@@ -176,6 +176,8 @@ function Coin() {
   const { isLoading: infoLoading, data: infoData } = useQuery<InfoData>(
     ["info", coinId],
     () => fetchCoinInfo(coinId)
+    // argument가 필요하기 때문에 () => fetchCoinInfo(coinId)라고 쓰는거다.
+    // argument가 필요 없으면 fetchCoinInfo라고 쓰면 된다.
   );
   const { isLoading: tickersLoading, data: tickersData } = useQuery<PriceData>(
     ["tickers", coinId],
@@ -230,7 +232,7 @@ function Coin() {
             </Tab>
           </Tabs>
           <Routes>
-            <Route path="chart" element={<Chart />} />
+            <Route path="chart" element={<Chart coinId={coinId as string} />} />
             <Route path="price" element={<Price />} />
           </Routes>
         </>
