@@ -6,7 +6,7 @@ function Router() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Coins />} />
+        <Route path="/crypto-tracker" element={<Coins />} />
         <Route path="/:coinId/*" element={<Coin />} />
         {/* 
         v6에서 nested routes를 구현하는 방법은 두 가지가 있다.
