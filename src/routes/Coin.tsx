@@ -73,7 +73,7 @@ const Tab = styled.span<{ isActive: boolean }>`
   text-transform: uppercase;
   font-size: 12px;
   font-weight: 400;
-  background-color: #00000081;
+  background-color: #00000021;
   padding: 7px 0px;
   border-radius: 10px;
   color: ${(props) =>

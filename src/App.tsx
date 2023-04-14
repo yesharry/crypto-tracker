@@ -1,9 +1,11 @@
-import { createGlobalStyle } from "styled-components";
+import { ThemeProvider, createGlobalStyle } from "styled-components";
 // createGlobalStyle은 한 컴포넌트를 만들 수 있게 해준다.
 // 렌더링 될 떄, 그 컴포넌트는 전역 스코프에 스타일을 올려준다.
 import Router from "./Router";
 
 import { ReactQueryDevtools } from "react-query/devtools";
+import { darkTheme, lightTheme } from "./theme";
+import { useState } from "react";
 // react query는 Devtools(Developer Tools, 개발자도구)라는 것을 가지고 있는데
 // Devtools는 render할 수 있는 component이고 이건 뭘 보여주냐면
 // react query에 있는 devtools를 import 해오면 나의 캐시에 있는 query를 볼 수 있다.
@@ -72,11 +74,17 @@ a {
 `;
 
 function App() {
+  const [isDark, setIsDark] = useState(false);
+  const toggleDark = () => setIsDark((current) => !current);
+
   return (
     <>
-      <GlobalStyle />
-      <Router />
-      <ReactQueryDevtools initialIsOpen={true} />
+      <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
+        <button onClick={toggleDark}>Toggle Mode</button>
+        <GlobalStyle />
+        <Router />
+        <ReactQueryDevtools initialIsOpen={true} />
+      </ThemeProvider>
     </>
   );
 }
