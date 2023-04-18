@@ -80,14 +80,20 @@ function App() {
   return (
     <>
       <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
-        <button onClick={toggleDark}>Toggle Mode</button>
         <GlobalStyle />
-        <Router />
+        <Router isDark={isDark} toggleDark={toggleDark} />
         <ReactQueryDevtools initialIsOpen={true} />
       </ThemeProvider>
     </>
   );
 }
+
+// toggleDark: App -> Router -> Coins
+// isDark: App -> Router -> Coin -> Chart
+// state management를 사용하면 이런 복잡하고 귀찮은 과정을 생략할 수 있어.
+
+// Header -> (isDark) <- Chart
+// App -> ()
 
 export default App;
 

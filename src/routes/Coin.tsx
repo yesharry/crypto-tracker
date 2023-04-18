@@ -148,7 +148,11 @@ interface PriceData {
   };
 }
 
-function Coin() {
+interface ICoinProps {
+  isDark: boolean;
+}
+
+function Coin({ isDark }: ICoinProps) {
   // const params = useParams();
   // url의 파라미터 부분을 잡아내고 싶을 때 useParams 훅을 이용하면 된다.
   // console.log(params);
@@ -241,7 +245,10 @@ function Coin() {
             </Tab>
           </Tabs>
           <Routes>
-            <Route path="chart" element={<Chart coinId={coinId as string} />} />
+            <Route
+              path="chart"
+              element={<Chart isDark={isDark} coinId={coinId as string} />}
+            />
             <Route path="price" element={<Price />} />
           </Routes>
         </>
