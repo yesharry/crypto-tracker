@@ -2,20 +2,12 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Coins from "./routes/Coins";
 import Coin from "./routes/Coin";
 
-interface IRouterProps {
-  toggleDark: () => void;
-  isDark: boolean;
-}
-
-function Router({ toggleDark, isDark }: IRouterProps) {
+function Router() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route
-          path="/crypto-tracker"
-          element={<Coins toggleDark={toggleDark} />}
-        />
-        <Route path="/:coinId/*" element={<Coin isDark={isDark} />} />
+        <Route path="/crypto-tracker" element={<Coins />} />
+        <Route path="/:coinId/*" element={<Coin />} />
         {/* 
         v6에서 nested routes를 구현하는 방법은 두 가지가 있다.
         첫 번째는 부모 route의 path 마지막에 /*를 적어 명시적으로 이 route의 내부에서

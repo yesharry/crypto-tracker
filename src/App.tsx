@@ -5,7 +5,8 @@ import Router from "./Router";
 
 import { ReactQueryDevtools } from "react-query/devtools";
 import { darkTheme, lightTheme } from "./theme";
-import { useState } from "react";
+import { useRecoilValue } from "recoil";
+import { isDarkAtom } from "./atoms";
 // react query는 Devtools(Developer Tools, 개발자도구)라는 것을 가지고 있는데
 // Devtools는 render할 수 있는 component이고 이건 뭘 보여주냐면
 // react query에 있는 devtools를 import 해오면 나의 캐시에 있는 query를 볼 수 있다.
@@ -74,14 +75,14 @@ a {
 `;
 
 function App() {
-  const [isDark, setIsDark] = useState(false);
-  const toggleDark = () => setIsDark((current) => !current);
+  const isDark = useRecoilValue(isDarkAtom);
+  // useRecoilValue를 atom의 value를 가져온다.
 
   return (
     <>
       <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
         <GlobalStyle />
-        <Router isDark={isDark} toggleDark={toggleDark} />
+        <Router />
         <ReactQueryDevtools initialIsOpen={true} />
       </ThemeProvider>
     </>

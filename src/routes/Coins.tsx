@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { fetchCoins } from "../api";
 import { Helmet } from "react-helmet";
+import { useSetRecoilState } from "recoil";
+import { isDarkAtom } from "../atoms";
 
 const Container = styled.div`
   padding: 0px 20px;
@@ -69,11 +71,12 @@ interface ICoin {
   type: string;
 }
 
-interface ICoinsProps {
-  toggleDark: () => void;
-}
+function Coins() {
+  const setDarkAtom = useSetRecoilState(isDarkAtom);
+  // useSetRecoilState는 value를 설정(set)하는 function이다.
+  // 이 function은 react의 setState와 같은 방식으로 작동한다.
+  const toggleDarkAtom = () => setDarkAtom((prev) => !prev);
 
-function Coins({ toggleDark }: ICoinsProps) {
   const { isLoading, data } = useQuery<ICoin[]>("allCoins", fetchCoins);
   // useQuery hook은 너의 fetcher 함수를 부르고
   // fetcher 함수가 loading중이라면 react query는 여기서 그걸 알려줄거다.
@@ -90,7 +93,7 @@ function Coins({ toggleDark }: ICoinsProps) {
       </Helmet>
       <Header>
         <Title>코인</Title>
-        <button onClick={toggleDark}>Toggle Mode</button>
+        <button onClick={toggleDarkAtom}>Toggle Mode</button>
       </Header>
       {isLoading ? (
         <Loader>Loading...</Loader>
